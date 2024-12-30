@@ -43,8 +43,7 @@ const CaptainLogin = () => {
         <div>
           <img  className='w-20 mb-3'
          src="https://www.svgrepo.com/show/505031/uber-driver.svg" 
-            alt="uber captain logo"
-            
+            alt="uber captain logo"  
           />
           <form onSubmit={(e)=>handleSumbit(e)}>
             <h3 className="text-lg mb-2 font-medium">
