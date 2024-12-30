@@ -5,9 +5,12 @@ import UserSignUp from './Pages/UserSignUp'
 import UserLogin from './Pages/UserLogin'
 import CaptainLogin from './Pages/CaptainLogin'
 import CaptainSignUp from './Pages/CaptainSignUp'
+import { ToastContainer } from 'react-toastify'
 
 const App = () => {
   return (
+    <>
+    <ToastContainer/>
     <Routes>
       {/* use kebab case while setting routes */}
       <Route path='/' element={<HomePage/>}/>
@@ -16,6 +19,7 @@ const App = () => {
       <Route path='/captain-signup' element = {<CaptainSignUp/>} />
       <Route path='/captain-login' element = {<CaptainLogin/>}/>
     </Routes>
+    </>
   )
 }
 

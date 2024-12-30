@@ -8,8 +8,6 @@ const UserLogin = () => {
   const [userData, setUserData] = useState({})
   const handleSumbit = (e) => {
     e.preventDefault();
-    console.log("Email:", email);
-    console.log("Password:", password);
     if (rememberMe) {
       localStorage.setItem('email', email);
       localStorage.setItem('password', password);
@@ -88,7 +86,7 @@ const UserLogin = () => {
               Login
             </button>
           </form>
-          <p className="mb-3 text-center">New Here? <Link className="text-blue-600" to="/user-signup">Create an Account</Link></p>
+          <p className="mb-3 text-center">New Here? <Link to='/user-signup' className="text-blue-600" >Create an Account</Link></p>
            {/* seprator */}
          <div className="seprator flex items-center">
             <hr className="flex-grow bg-gray-400"/>
