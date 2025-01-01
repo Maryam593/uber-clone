@@ -124,7 +124,7 @@ const UserSignUp = () => {
               type="submit"
               className="px-4 py-2 rounded-[4px] bg-[#0c0c0c] text-white w-full text-lg placeholder:text-semibold mb-2"
             >
-              Login
+              Create an Account
             </button>
           </form>
           <p className="mb-3 text-center">Already have an account? <Link className="text-blue-600" to="/user-login">Login Here</Link></p>

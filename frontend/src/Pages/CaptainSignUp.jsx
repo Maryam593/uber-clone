@@ -99,7 +99,7 @@ const CaptainSignUp = () => {
               type="submit"
               className="px-4 py-2 rounded-[4px] bg-[#0c0c0c] text-white w-full text-lg placeholder:text-semibold mb-2"
             >
-              Login
+              Create an Account
             </button>
           </form>
           <p className="mb-3 text-center">Already a member? <Link className="text-blue-600" to="/captain-login">Login Here</Link></p>
