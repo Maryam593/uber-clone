@@ -1,13 +1,45 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { UserDataContext } from "../Context/UserContext";
+import axios from "axios";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const UserLogin = () => {
   // for 2 way data binding 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('')
   //for setting userData
   const [userData, setUserData] = useState({})
-  const handleSumbit = (e) => {
+  const navigate = useNavigate();
+  const {user,setUser} = useContext(UserDataContext)
+  const handleSumbit = async(e) => {
     e.preventDefault();
+    const userData = {
+      Email: email,
+      password: password,
+    };
+   try { const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/Signin`, userData);
+   if(response.status===200){
+    const data = response.data;
+    setUser(data.user);
+    localStorage.setItem("token", data.token);
+    toast.success("Login Successfully", { autoClose: 1000 });
+    navigate("/home");
+   }
+
+    
+   } catch (error) {
+     if (error.response) {
+        toast.error(error.response.data.message || "Registration failed");
+      } else {
+        toast.error("An error occurred");
+      }
+   }
+   finally{
+    setEmail('');
+    setPassword('')
+   }
     if (rememberMe) {
       localStorage.setItem('email', email);
       localStorage.setItem('password', password);
@@ -17,10 +49,6 @@ const UserLogin = () => {
       localStorage.removeItem('password');
       localStorage.removeItem('rememberMe');
     }
-    setEmail('');
-    setPassword('')
-    setUserData({email:email, password:password})
-    console.log(userData)
   }
   //rememberme
   const [rememberMe, setRememberMe] = useState(false);

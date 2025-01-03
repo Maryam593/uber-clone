@@ -1,34 +1,31 @@
 import dotenv from "dotenv";
 import express from "express";
+import AllRoutes from "./Routes/index.js";
 import cors from "cors";
 import dataConnection from "./db/db.js";
 import cookierParser from "cookie-parser"
-import AllRoutes from "./Routes/index.js";
-
-
 dotenv.config();
 //db Xonnection
 dataConnection();
 
 const myApp = express();
-//for creating users
-myApp.use(express.json());
+
 //cookie parser
 myApp.use(cookierParser())
-// Router 
-myApp.use(AllRoutes)
 
 const port = process.env.PORT
+
 const crosOrigin = {
-    origin : 'localhost:5173',
+    origin : 'http://localhost:5173',
     methods : ['GET,PUT,POST,PATCH,DELETE'],
     credentials: true,
 }
 myApp.use(cors(crosOrigin))
-// myApp.get("/hello", (req,res)=> {
-//     res.json({message:"hello world"})
-// })
 
+//for creating users
+myApp.use(express.json());
+// Router    
+myApp.use(AllRoutes)
 myApp.listen(port, ()=> {
     console.log(`server is running fine on port ${port}`)
 })
