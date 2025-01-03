@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-const StartPage = () => {
+const Start = () => {
     return (
         <>
         <div>
@@ -15,4 +15,4 @@ const StartPage = () => {
         </>
     )
 }
-export default StartPage
+export default Start

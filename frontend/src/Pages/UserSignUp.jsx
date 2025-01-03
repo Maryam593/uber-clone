@@ -1,8 +1,12 @@
 import React from "react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import axios from "axios"
+import {UserDataContext} from "../Context/UserContext";
+import {useContext} from 'react'
+
 
 const UserSignUp = () => {
   // for 2 way data binding
@@ -11,22 +15,55 @@ const UserSignUp = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [phoneNo, setPhoneNumber] = useState("");
-  const [userData, setUserData] = useState({})
-  const handleSubmit = (e) => {
+  //const [userData, setUserData] = useState({})
+  const {user,setUser} = useContext(UserDataContext)
+  const navigateUser = useNavigate();
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setUserData({
-      FullName : {firstName:firstName,
-        lastName:lastName,},
-      phoneNo:phoneNo,
-      email:email,
-      password:password,  
-    })
-    setFirstName("");
-    setLastName("");
-    setPhoneNumber("");
-    setEmail("");
-    setPassword("");
+  
+    const userData = {
+      FullName: {
+        firstName: firstName,
+        lastName: lastName,
+      },
+      phoneNo: phoneNo,
+      Email: email,
+      password: password,
+    };
+  
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_BASE_URL}/register`,
+        userData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+  
+      if (response.status === 200) {
+        const data = response.data;
+        setUser(data.user);
+        toast.success("Register Successfully", { autoClose: 1000 });
+        navigateUser("/home");
+      }
+    } catch (error) {
+      if (error.response) {
+        toast.error(error.response.data.message || "Registration failed");
+      } else {
+        toast.error("An error occurred");
+      }
+    } finally {
+      // Clear form fields after API call
+      setFirstName("");
+      setLastName("");
+      setPhoneNumber("");
+      setEmail("");
+      setPassword("");
+    }
   };
+  
   return (
     <>
       <div className="h-screen p-7 flex justify-between flex-col">
