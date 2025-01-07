@@ -6,6 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import axios from "axios"
 import {UserDataContext} from "../Context/UserContext";
 import {useContext} from 'react'
+import { AiFillEye, AiFillEyeInvisible, AiFillVideoCamera } from "react-icons/ai";
 
 
 const UserSignUp = () => {
@@ -16,6 +17,7 @@ const UserSignUp = () => {
   const [lastName, setLastName] = useState("");
   const [phoneNo, setPhoneNumber] = useState("");
   //const [userData, setUserData] = useState({})
+  const [isVisible, setIsVisible] = useState(false);
   const {user,setUser} = useContext(UserDataContext)
   const navigateUser = useNavigate();
   const handleSubmit = async (e) => {
@@ -45,8 +47,9 @@ const UserSignUp = () => {
       if (response.status === 200) {
         const data = response.data;
         setUser(data.user);
+        localStorage.setItem('token', data.token)
         toast.success("Register Successfully", { autoClose: 1000 });
-        navigateUser("/home");
+        navigateUser("/Home");
       }
     } catch (error) {
       if (error.response) {
@@ -146,17 +149,22 @@ const UserSignUp = () => {
             <h3 className="text-lg mb-2 font-medium">Password</h3>
             <input
               value={password}
-              type="password"
+              type={isVisible ? "text" : 'password'}
               name="password"
               id="password"
               onChange={(e) => {
                 setPassword(e.target.value);
+                setIsVisible(false)
               }}
               required
               pattern="[a-zA-Z0-9]{0,9}" //setting up the pattern
               placeholder="password"
               className="px-4 py-2 border rounded-[4px] bg-[#eeeeee] w-full text-lg placeholder:text-base mb-4"
             />
+            {/* for visiblity of eye */}
+            <button className="absolute right-10 top-96"   onClick={() => setIsVisible(!isVisible)}>
+              {isVisible ? <AiFillEyeInvisible/>:<AiFillEye/>}
+            </button>
             <button
               type="submit"
               className="px-4 py-2 rounded-[4px] bg-[#0c0c0c] text-white w-full text-lg placeholder:text-semibold mb-2"

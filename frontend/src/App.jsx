@@ -7,6 +7,8 @@ import CaptainSignUp from './Pages/CaptainSignUp'
 import { ToastContainer } from 'react-toastify'
 import Start from './Pages/Start'
 import Home from './Pages/Home'
+import UserProtectedWrapper from './Pages/UserProtectedWrapper'
+import UserLogout from './Pages/UserLogout'
 
 const App = () => {
   return (
@@ -15,11 +17,16 @@ const App = () => {
     <Routes>
       {/* use kebab case while setting routes */}
       <Route path='/' element={<Start/>}/>
-      <Route path = "/home" element = {<Home/>}/>
+      <Route path = "/Home" element = {<UserProtectedWrapper>
+        <Home/>
+      </UserProtectedWrapper>}/>
       <Route path = '/user-signup' element={<UserSignUp/>}/>
       <Route path='/user-login' element={<UserLogin/>}/>
       <Route path='/captain-signup' element = {<CaptainSignUp/>} />
       <Route path='/captain-login' element = {<CaptainLogin/>}/>
+      <Route path='/user/logout' element={<UserProtectedWrapper>
+        <UserLogout/>
+      </UserProtectedWrapper>}/>
     </Routes>
     </>
   )
