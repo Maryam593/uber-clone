@@ -47,7 +47,7 @@ const UserSignUp = () => {
       if (response.status === 200) {
         const data = response.data;
         setUser(data.user);
-        localStorage.setItem('token', data.token)
+        localStorage.setItem('token', data.data)
         toast.success("Register Successfully", { autoClose: 1000 });
         navigateUser("/Home");
       }
