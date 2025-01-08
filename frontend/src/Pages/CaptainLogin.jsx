@@ -1,15 +1,23 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
+import { Link, useNavigate } from "react-router-dom";
+import { CaptainDataContext } from "../Context/CaptainContext";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
 const CaptainLogin = () => {
   // for 2 way data binding 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('')
   //for setting userData
   const [captainData, setCaptainData] = useState({})
-  const handleSumbit = (e) => {
+  //useContext
+  const {captain, setCaptain} = useContext(CaptainDataContext);
+  const navigate = useNavigate()
+  //for visibility 
+  const [isVisible, setIsVisible] = useState(false);
+  const handleSumbit = async(e) => {
     e.preventDefault();
-    console.log("Email:", email);
-    console.log("Password:", password);
     if (rememberMe) {
       localStorage.setItem('email', email);
       localStorage.setItem('password', password);
@@ -19,10 +27,30 @@ const CaptainLogin = () => {
       localStorage.removeItem('password');
       localStorage.removeItem('rememberMe');
     }
+    const setCaptainData = {
+      email:email, password:password
+    }
+    try{
+      const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/LoginAsCaptain`, setCaptainData)
+      if(response.status === 200)
+      {
+        setCaptain(data.captain)
+      }
+      localStorage.setItem('token', data.Data)
+      toast.success('Login successfully')
+      navigate('/Home')
+    }
+    catch (error) {
+      if (error.response) {
+        toast.error(error.response.data.message || "Registration failed");
+      } else {
+        toast.error("An error occurred");
+      }
+    }
+   finally{
     setEmail('');
     setPassword('')
-    setCaptainData({email:email, password:password})
-    console.log(captainData)
+   }
   }
   //rememberme
   const [rememberMe, setRememberMe] = useState(false);
@@ -64,7 +92,7 @@ const CaptainLogin = () => {
             <h3 className="text-lg mb-2 font-medium">Password</h3>
             <input
             value={password}
-              type="password"
+              type={isVisible?"text": "password"}
               name="password"
               id="password"
               onChange={(e)=>{
@@ -75,6 +103,10 @@ const CaptainLogin = () => {
               placeholder="password"
               className="px-4 py-2 border rounded-[4px] bg-[#eeeeee] w-full text-lg placeholder:text-base mb-5"
             />
+            {/* for eye visiblity */}
+            <button onClick={() => setIsVisible(!isVisible)} className="absolute right-10 top-[270px]">
+              {isVisible ? <AiFillEyeInvisible/> : <AiFillEye/>}
+            </button>
 
             <label htmlFor="rememberme" className="flex gap-1 mb-2 w-full">
               <input type="checkbox" name="rememberme" id="rememberme" checked={rememberMe} onChange={()=>{setRememberMe(!rememberMe)}}/>

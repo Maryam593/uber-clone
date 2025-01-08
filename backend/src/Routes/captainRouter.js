@@ -28,7 +28,7 @@ captainRouter.post("/registerCaptain", [
     .withMessage("invalid choice"),
 ],captainController.CreateCaptain);
 
-captainRouter.post("/LoginAsCaptain", captainAuthMiddleWare, captainController.LoginAsCaptain)
+captainRouter.post("/LoginAsCaptain",captainController.LoginAsCaptain)
 captainRouter.patch("/updateCaptainStatus/:id", captainController.UpdateCaptainStatus)
 captainRouter.get("/AllCaptainProfiles",captainAuthMiddleWare,captainController.getAll)
 captainRouter.delete("/DeActivateCaptainProfile",captainAuthMiddleWare,captainController.DeActivateCaptainProfile)
