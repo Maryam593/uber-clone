@@ -44,7 +44,7 @@ const CaptainSignUp = () => {
       toast.success("Register Successfully", {
         autoClose: 1000
       })
-      navigate('/Home')
+      navigate('/captain-home')
     }
     } catch (error) {
       console.log(error)

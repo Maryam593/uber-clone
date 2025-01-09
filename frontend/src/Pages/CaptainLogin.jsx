@@ -18,39 +18,44 @@ const CaptainLogin = () => {
   const [isVisible, setIsVisible] = useState(false);
   const handleSumbit = async(e) => {
     e.preventDefault();
-    if (rememberMe) {
-      localStorage.setItem('email', email);
-      localStorage.setItem('password', password);
-      localStorage.setItem('rememberMe', 'true');
-    } else {
-      localStorage.removeItem('email');
-      localStorage.removeItem('password');
-      localStorage.removeItem('rememberMe');
-    }
+   
     const setCaptainData = {
       email:email, password:password
     }
     try{
       const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/LoginAsCaptain`, setCaptainData)
+      let data = null;
       if(response.status === 200)
       {
+         data = response.data;
         setCaptain(data.captain)
       }
       localStorage.setItem('token', data.Data)
       toast.success('Login successfully')
-      navigate('/Home')
+      navigate('/captain-home')
     }
     catch (error) {
       if (error.response) {
+        console.log(error)
         toast.error(error.response.data.message || "Registration failed");
       } else {
         toast.error("An error occurred");
+        console.log(error)
       }
     }
    finally{
     setEmail('');
     setPassword('')
    }
+   if (rememberMe) {
+    localStorage.setItem('email', email);
+    localStorage.setItem('password', password);
+    localStorage.setItem('rememberMe', 'true');
+  } else {
+    localStorage.removeItem('email');
+    localStorage.removeItem('password');
+    localStorage.removeItem('rememberMe');
+  }
   }
   //rememberme
   const [rememberMe, setRememberMe] = useState(false);

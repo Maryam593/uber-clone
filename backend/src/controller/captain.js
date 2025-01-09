@@ -153,8 +153,8 @@ const captainController = {
       //step:1 clear cookie
       res.clearCookie("token");
       //remove token
-      const token =
-        req.cookies.token || req.headers.Authroization?.split(" ")[1];
+      const token = req.cookies.token || req.headers.authorization?.split(" ")[1];
+
       if (!token) {
         return res.status(401).json({ Warning: "Token is missing" });
       }
