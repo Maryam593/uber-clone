@@ -32,5 +32,5 @@ captainRouter.post("/LoginAsCaptain",captainController.LoginAsCaptain)
 captainRouter.patch("/updateCaptainStatus/:id", captainController.UpdateCaptainStatus)
 captainRouter.get("/AllCaptainProfiles",captainAuthMiddleWare,captainController.getAll)
 captainRouter.delete("/DeActivateCaptainProfile",captainAuthMiddleWare,captainController.DeActivateCaptainProfile)
-captainRouter.post("/LogOutAsCaptain",captainAuthMiddleWare,captainController.LogoutAsCaptain)
+captainRouter.get("/LogOutAsCaptain",captainAuthMiddleWare,captainController.LogoutAsCaptain)
 export default captainRouter;

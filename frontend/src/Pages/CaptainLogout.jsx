@@ -21,9 +21,8 @@ const CaptainLogout = () => {
       }
 
       // Make the logout API call
-      const response = await axios.post(
+      const response = await axios.get(
         `${import.meta.env.VITE_BASE_URL}/LogOutAsCaptain`,
-        {}, // No body needed
         {
           headers: {
             Authorization: `Bearer ${token}`,
