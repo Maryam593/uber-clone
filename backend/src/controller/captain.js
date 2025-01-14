@@ -167,6 +167,19 @@ const captainController = {
       res.status(500).json({ Error: "Internal Server Error" });
     }
   },
-};
+  CaptainProfile : async (req, res) => {
+    try {
+        // Ensure `req.captain` exists (from middleware)
+        if (!req.captain) {
+            return res.status(400).json({ Warning: "Captain ID is missing" });
+        }
+        res.status(200).json({ Success: "Captain profile fetched successfully", captain:req.captain });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ Error: "Internal server error" });
+    }
+}
+
+}
 
 export default captainController;
