@@ -27,7 +27,7 @@ captainRouter.post("/registerCaptain", [
     .isIn(["car", "motorcycle", "rickshaw"])
     .withMessage("invalid choice"),
 ],captainController.CreateCaptain);
-
+captainRouter.get("/CaptainProfile",captainAuthMiddleWare,captainController.CaptainProfile)
 captainRouter.post("/LoginAsCaptain",captainController.LoginAsCaptain)
 captainRouter.patch("/updateCaptainStatus/:id", captainController.UpdateCaptainStatus)
 captainRouter.get("/AllCaptainProfiles",captainAuthMiddleWare,captainController.getAll)

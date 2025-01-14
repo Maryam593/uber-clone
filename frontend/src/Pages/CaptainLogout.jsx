@@ -11,16 +11,12 @@ const CaptainLogout = () => {
     e.preventDefault();
 
     try {
-      const token = localStorage.getItem("token"); // Retrieve token from localStorage
-
-      // Check if token exists
+      const token = localStorage.getItem("token");
       if (!token) {
         toast.error("No token found. Please log in first.");
         navigate("/captain-home");
         return;
       }
-
-      // Make the logout API call
       const response = await axios.get(
         `${import.meta.env.VITE_BASE_URL}/LogOutAsCaptain`,
         {
@@ -31,7 +27,6 @@ const CaptainLogout = () => {
       );
 
       if (response.status === 200) {
-        // Remove token and navigate
         localStorage.removeItem("token");
         toast.success("Logged out successfully!");
         navigate("/captain-home");
