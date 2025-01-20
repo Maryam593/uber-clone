@@ -12,7 +12,7 @@ const Home = () => {
                 </div>
             </div>
         </div> */}
-        <h1>uber clone</h1>
+        <h1>user - uber clone</h1>
         </>
     )
 }

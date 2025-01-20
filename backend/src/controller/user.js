@@ -106,7 +106,16 @@ LogOut: async (req, res, next) => {
       console.error("Error logging out:", error);
       return res.status(500).json({ Error: "Internal server error" }); // Handle errors
     }
+  },
+UserProfile : async(req,res)=>{
+  try {
+    if(!req.user)
+    {return res.status(404).json({Warning: "User not found"})}
+    res.status(200).json({Success: "User profile", user: req.user})
+  } catch (error) {
+    res.status(500).json({Error:"Internal server error"})
   }
+}
   
   
 };
