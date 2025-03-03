@@ -11,4 +11,5 @@ userRouter.post("/register",[body('Email').isEmail().withMessage("Invalid email"
 userRouter.post("/SignIn",userAuthController.SignIn);
 userRouter.delete("/RemoveUser/:firstName", userAuthMiddleware,userAuthController.DeleteUser)
 userRouter.get("/Logout",userAuthMiddleware ,userAuthController.LogOut)
+userRouter.get("/user-profile", userAuthMiddleware, userAuthController.UserProfile)
 export default userRouter
