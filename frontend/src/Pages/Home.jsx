@@ -1,6 +1,9 @@
 import React, { useRef, useState } from "react";
 import {useGSAP} from "@gsap/react"
 import gsap from "gsap";
+import { RiArrowDownWideLine,RiArrowUpWideLine} from "react-icons/ri";
+import LocationSearchPanel from "../Components/LocationSearchPanel";
+
 const Home = () => {
   //form binding
   const [pickUp, setPickUp] = useState("");
@@ -17,26 +20,29 @@ const Home = () => {
     setPickUp(e.target.value);
   };
 //   for animation
-// useGSAP(function(){
-//     if(panelOpen)
-//     {
-//         gsap.to(panelRef.current,{
-//             height:"70vh"
-//          })
-//     }
-//     else {
-//         gsap.to(panelRef.current,{
-//             height:"0"
-//          })
-//     }
-// },[panelOpen])
 useGSAP(function(){
-    if(panelOpen){
+    if(panelOpen)
+    {
         gsap.to(panelRef.current,{
-            height : panelOpen ? '70vh' : '0vh'
-        })
+            height:"70vh",
+            opacity: 1,
+            padding:24
+         })
+    }
+    else {
+        gsap.to(panelRef.current,{
+            height:"0",
+            opacity:0
+         })
     }
 },[panelOpen])
+// useGSAP(function(){
+//     if(panelOpen){
+//         gsap.to(panelRef.current,{
+//             height : panelOpen ? '70vh' : '0vh'
+//         })
+//     }
+// },[panelOpen])
   return (
     <>
       <div className="h-screen relative">
@@ -54,18 +60,21 @@ useGSAP(function(){
         </div>
         <div className="bg-white absolute bottom-0 w-full flex flex-col justify-end">
           <div className="h-[30vh]  p-5 bg-white relative">
+            <h5 className="absolute top-7 right-7 text-2xl " onClick={()=> {setPanelOpen(false)}}>
+              {panelOpen ? <RiArrowDownWideLine/> : <RiArrowUpWideLine/>}
+            </h5>
             <h4 className="text-2xl font-semibold">Find a trip</h4>
             <form onSubmit={handleSumbit}>
-              <div className="line top-[45%] left-10 absolute bg-gray-900 rounded-full h-16 w-[2px]"></div>
+              <div className="line top-[45%] left-10 absolute bg-gray-900 rounded-full h-16 w-[2px] mt-2"></div>
               <input
                 type="text"
                 name="pickup"
                 id=""
                 placeholder="Add a pickup location"
-                className="bg-[#eee] px-12 py-2 text-base rounded-lg w-full mt-5"
+                className="bg-[#eee] px-12 py-3 text-base rounded-lg w-full mt-6"
                 onChange={handlePickup}
                 onClick={() => {
-                  setPanelOpen(true);
+                  setPanelOpen(!panelOpen);
                 }}
                 value={pickUp}
               />
@@ -77,13 +86,15 @@ useGSAP(function(){
                 }}
                 id=""
                 placeholder="Add your destination"
-                className="bg-[#eee] px-12 py-2 text-base rounded-lg w-full mt-3"
+                className="bg-[#eee] px-12 py-3 text-base rounded-lg w-full mt-5"
                 value={destination}
                 onChange={handleDestination}
               />
             </form>
           </div>
-          <div ref= {panelRef} className="h-0 bg-red-600 w-full p-5"></div>
+          <div ref= {panelRef} className="h-0 opacity-0 bg-white w-full p-5">
+            <LocationSearchPanel/>
+          </div>
         </div>
       </div>
       {/* <h1>user - uber clone</h1> */}
