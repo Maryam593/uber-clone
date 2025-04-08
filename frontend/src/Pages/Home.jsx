@@ -3,12 +3,14 @@ import {useGSAP} from "@gsap/react"
 import gsap from "gsap";
 import { RiArrowDownWideLine,RiArrowUpWideLine} from "react-icons/ri";
 import LocationSearchPanel from "../Components/LocationSearchPanel";
+import IsLocationAvailable from "../Components/IsLocationAvailable";
 
 const Home = () => {
   //form binding
   const [pickUp, setPickUp] = useState("");
   const [destination, setDestination] = useState("");
   const [panelOpen, setPanelOpen] = useState(false);
+  const [vechiclePanel, setVechiclePanel] = useState(false)
  const panelRef = useRef(null)
   const handleSumbit = (e) => {
     e.preventDefault();
@@ -93,7 +95,11 @@ useGSAP(function(){
             </form>
           </div>
           <div ref= {panelRef} className="h-0 opacity-0 bg-white w-full p-5">
-            <LocationSearchPanel/>
+            <LocationSearchPanel vechiclePanel = {vechiclePanel} setVechiclePanel = {setVechiclePanel} panelOpen = {panelOpen}/>
+          </div>
+          <hr />
+          <div>
+            <IsLocationAvailable/>
           </div>
         </div>
       </div>
