@@ -5,6 +5,7 @@ import { RiMotorbikeFill } from "react-icons/ri";
 import { FaCaravan } from "react-icons/fa";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import { RiArrowDownWideLine } from "react-icons/ri";
 
 const IsLocationAvailable = React.forwardRef((props,ref) => {
   // Vehicle data array
@@ -46,11 +47,27 @@ const IsLocationAvailable = React.forwardRef((props,ref) => {
   // Handle vehicle selection
   const handleVehicleClick = (index) => {
     setActiveIndex(index);
+    props.setConfirmRidePanel(true)
   };
+  const handleClose = () => {
+    if (ref.current) {
+      gsap.to(ref.current, {
+        transform: 'translateY(100%)',
+        duration: 0.5,
+        ease: "power2.out",
+        onComplete: props.onClose 
+      });
+    } else {
+      props.onClose();
+    }
+  };
+  
 
   return (
-    <div className="bg-white w-full  fixed z-10 bottom-0 px-2 py-4">
-      <h3 className="text-2xl font-semibold mb-5">Choose a Vehicle</h3>
+    <div className="bg-white w-full  fixed z-10 bottom-0 px-2 py-4 shadow-[4px_4px_4px_4px_#000] rounded-md ">
+       <h5 className="text-xl absolute top-0 p-3 mb-5 w-full flex justify-center" onClick={handleClose}><RiArrowDownWideLine className="text-gray-400" /></h5>
+      <h3 className="text-2xl font-semibold mb-5 mt-5">Choose a Vehicle</h3>
+     
       {vehicles.map((vehicle, index) => (
         <div
           key={index}
@@ -58,9 +75,9 @@ const IsLocationAvailable = React.forwardRef((props,ref) => {
             activeIndex === index ? "border-black" : "bg-gray-200 border-gray-200"
           }`}
           onClick={() => handleVehicleClick(index)}
-        >
+        > 
           <h1>{vehicle.icon}</h1>
-          <div className="w-1/2 p-2 flex flex-col ml-2">
+          <div className="w-1/2 p-2 flex flex-col ml-2" >
             <h4 className="font-medium text-black flex text-base">
               {vehicle.name}
               <span className="flex items-center ml-2 text-black">

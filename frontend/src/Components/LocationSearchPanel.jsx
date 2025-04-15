@@ -8,6 +8,7 @@ const LocationSearchPanel = (props) => {
     const handleBorder = (index) => {
         setClicked(index);
      
+     
     };
 
     const locations = [
@@ -22,7 +23,10 @@ const LocationSearchPanel = (props) => {
     ];
 
     return (
-        <div className="" onClick={() => props.setVehiclePanel(true)} >
+        <div className="" onClick={() => {props.setVehiclePanel(true)
+            props.setPanelOpen(false)
+        }
+        } >
             {locations.map((location, index) => (
                 <div 
                     key={index} 
