@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
-import {useGSAP} from "@gsap/react"
+import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { RiArrowDownWideLine,RiArrowUpWideLine} from "react-icons/ri";
+import { RiArrowDownWideLine, RiArrowUpWideLine } from "react-icons/ri";
 import LocationSearchPanel from "../Components/LocationSearchPanel";
 import IsLocationAvailable from "../Components/IsLocationAvailable";
 
@@ -10,8 +10,9 @@ const Home = () => {
   const [pickUp, setPickUp] = useState("");
   const [destination, setDestination] = useState("");
   const [panelOpen, setPanelOpen] = useState(false);
-  const [vechiclePanel, setVechiclePanel] = useState(false)
- const panelRef = useRef(null)
+  const [vechiclePanel, setVechiclePanel] = useState(false);
+  const panelRef = useRef(null);
+  const vehiclePanelRef = useRef(null);
   const handleSumbit = (e) => {
     e.preventDefault();
   };
@@ -21,30 +22,36 @@ const Home = () => {
   const handlePickup = (e) => {
     setPickUp(e.target.value);
   };
-//   for animation
-useGSAP(function(){
-    if(panelOpen)
-    {
-        gsap.to(panelRef.current,{
-            height:"70vh",
-            opacity: 1,
-            padding:24
-         })
-    }
-    else {
-        gsap.to(panelRef.current,{
-            height:"0",
-            opacity:0
-         })
-    }
-},[panelOpen])
-// useGSAP(function(){
-//     if(panelOpen){
-//         gsap.to(panelRef.current,{
-//             height : panelOpen ? '70vh' : '0vh'
-//         })
-//     }
-// },[panelOpen])
+  console.log("vehicle", vechiclePanel);
+  //   for animation
+  useGSAP(
+    function () {
+      if (panelOpen) {
+        gsap.to(panelRef.current, {
+          height: "70vh",
+          opacity: 1,
+          padding: 24,
+        });
+      } else {
+        gsap.to(panelRef.current, {
+          height: "0",
+          opacity: 0,
+        });
+      }
+    },
+    [panelOpen]
+  );
+  useGSAP(
+    function () {
+      if (vechiclePanel) {
+        gsap.to(vehiclePanelRef.current, { transform: "translateY(0)" });
+      } else {
+        gsap.to(vehiclePanelRef.current, { transform: "translateY(100%)" });
+      }
+    },
+    [vechiclePanel]
+  );
+
   return (
     <>
       <div className="h-screen relative">
@@ -62,8 +69,13 @@ useGSAP(function(){
         </div>
         <div className="bg-white absolute bottom-0 w-full flex flex-col justify-end">
           <div className="h-[30vh]  p-5 bg-white relative">
-            <h5 className="absolute top-7 right-7 text-2xl " onClick={()=> {setPanelOpen(false)}}>
-              {panelOpen ? <RiArrowDownWideLine/> : <RiArrowUpWideLine/>}
+            <h5
+              className="absolute top-7 right-7 text-2xl "
+              onClick={() => {
+                setPanelOpen(false);
+              }}
+            >
+              {panelOpen ? <RiArrowDownWideLine /> : <RiArrowUpWideLine />}
             </h5>
             <h4 className="text-2xl font-semibold">Find a trip</h4>
             <form onSubmit={handleSumbit}>
@@ -94,12 +106,20 @@ useGSAP(function(){
               />
             </form>
           </div>
-          <div ref= {panelRef} className="h-0 opacity-0 bg-white w-full p-5">
-            <LocationSearchPanel vechiclePanel = {vechiclePanel} setVechiclePanel = {setVechiclePanel} panelOpen = {panelOpen}/>
+          <div
+            ref={panelRef}
+            className={`h-0 opacity-0 bg-white w-full p-5 ${
+              panelOpen ? "h-[70vh] opacity-1 p-5" : ""
+            }`}
+          >
+            <LocationSearchPanel
+              setVehiclePanel={setVechiclePanel}
+              panelOpen={panelOpen}
+            />
           </div>
           <hr />
           <div>
-            <IsLocationAvailable/>
+            {vechiclePanel && <IsLocationAvailable ref={vehiclePanelRef} />}
           </div>
         </div>
       </div>

@@ -1,86 +1,12 @@
-// import React from "react";
-// import { FaCar } from "react-icons/fa";
-// import { RiAccountPinCircleFill } from "react-icons/ri";
-// import { RiMotorbikeFill } from "react-icons/ri";
-// import { FaCaravan } from "react-icons/fa";
-
-// const IsLocationAvailable = () => {
-//   return (
-//     <div className="bg-white w-full fixed z-10 bottom-0 px-2 py-4 ">
-//         <h3 className="text-2xl font-semibold mb-5">Choose a Vehicle</h3>
-//       <div className=" w-full flex items-center mb-2 justify-between p-4 gap-3 border-2 border-black rounded-md">
-//         <h1>
-//           <FaCar className="text-5xl text-black" />
-//         </h1>
-//         <div className=" w-1/2 p-2 flex flex-col ml-2">
-//           <h4 className="font-medium text-black flex text-base">
-//             UberGo
-//             <span className="flex items-center ml-2 text-black">
-//               <RiAccountPinCircleFill className="text-lg" /> 4
-//             </span>
-//           </h4>
-//           <h5 className="text-black text-sm font-medium">2 Mins Away</h5>
-//           <p className="text-gray-600 text-xs font-normal ">Affordable, compact rides</p>
-//         </div>
-//         <div className="flex items-baseline">
-//           <span className="text-black text-md">Rs</span>
-//           <h2 className="text-black font-semibold text-4xl p-2">455</h2>
-//         </div>
-//       </div>
-//       {/* bike */}
-//       <div className=" w-full flex items-center mb-2 justify-between p-4 gap-3 border-2 border-black rounded-md">
-//         <h1>
-//           <RiMotorbikeFill className="text-5xl text-black" />
-//         </h1>
-//         <div className=" w-1/2 p-2 flex flex-col ml-2">
-//           <h4 className="font-medium text-black flex text-base">
-//             Moto
-//             <span className="flex items-center ml-2 text-black">
-//               <RiAccountPinCircleFill className="text-lg" /> 1
-//             </span>
-//           </h4>
-//           <h5 className="text-black text-sm font-medium">5 Mins Away</h5>
-//           <p className="text-gray-600 text-xs font-normal ">Affordable, motorcycle rides</p>
-//         </div>
-//         <div className="flex items-baseline">
-//           <span className="text-black text-md">Rs</span>
-//           <h2 className="text-black font-semibold text-4xl p-2">255</h2>
-//         </div>
-//       </div>
-//       {/* Rickshaw */}
-//       <div className=" w-full flex items-center mb-2 justify-between p-4 gap-3 border-2 border-black rounded-md">
-//         <h1>
-//           <FaCaravan className="text-5xl text-black" />
-//         </h1>
-//         <div className=" w-1/2 p-2 flex flex-col ml-2">
-//           <h4 className="font-medium text-black flex text-base">
-//             RickShaw
-//             <span className="flex items-center ml-2 text-black">
-//               <RiAccountPinCircleFill className="text-lg" /> 3
-//             </span>
-//           </h4>
-//           <h5 className="text-black text-sm font-medium">5 Mins Away</h5>
-//           <p className="text-gray-600 text-xs font-normal ">Affordable, Rickshaw rides</p>
-//         </div>
-//         <div className="flex items-baseline">
-//           <span className="text-black text-md">Rs</span>
-//           <h2 className="text-black font-semibold text-4xl p-2">355</h2>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default IsLocationAvailable;
-
-
 import React, { useState } from "react";
 import { FaCar } from "react-icons/fa";
 import { RiAccountPinCircleFill } from "react-icons/ri";
 import { RiMotorbikeFill } from "react-icons/ri";
 import { FaCaravan } from "react-icons/fa";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
 
-const IsLocationAvailable = () => {
+const IsLocationAvailable = React.forwardRef((props,ref) => {
   // Vehicle data array
   const vehicles = [
     {
@@ -108,6 +34,11 @@ const IsLocationAvailable = () => {
       available: 3
     }
   ];
+  useGSAP(() => {
+    if (ref.current) {
+      gsap.to(ref.current, { transform: 'translateY(0)', duration: 0.3 });
+    }
+  }, [ref]);
 
   // State to track the active vehicle
   const [activeIndex, setActiveIndex] = useState(null);
@@ -118,7 +49,7 @@ const IsLocationAvailable = () => {
   };
 
   return (
-    <div className="bg-white w-full translate-y-full fixed z-10 bottom-0 px-2 py-4">
+    <div className="bg-white w-full  fixed z-10 bottom-0 px-2 py-4">
       <h3 className="text-2xl font-semibold mb-5">Choose a Vehicle</h3>
       {vehicles.map((vehicle, index) => (
         <div
@@ -147,7 +78,7 @@ const IsLocationAvailable = () => {
       ))}
     </div>
   );
-};
+});
 
 export default IsLocationAvailable;
 
