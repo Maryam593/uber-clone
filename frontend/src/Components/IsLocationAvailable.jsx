@@ -47,6 +47,7 @@ const IsLocationAvailable = React.forwardRef((props,ref) => {
   // Handle vehicle selection
   const handleVehicleClick = (index) => {
     setActiveIndex(index);
+    console.log("Vehicle clicked, opening ConfirmRide Panel");
     props.setConfirmRidePanel(true)
   };
   const handleClose = () => {
