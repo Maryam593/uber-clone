@@ -22,7 +22,8 @@ const ConfirmedRide = (props) => {
         </h3>
 
         {/* Car Icon */}
-        <FaCarSide className="text-[100px] text-black transform scale-x-[-1] mb-4" />
+        <FaCarSide className="text-[100px] text-black transform scale-x-[-1] mb-4 
+        p-2  animate-pulse" />
 
         {/* Ride Details */}
         <div className="w-full flex flex-col gap-4">
