@@ -5,6 +5,7 @@ import { RiArrowDownWideLine, RiArrowUpWideLine } from "react-icons/ri";
 import LocationSearchPanel from "../Components/LocationSearchPanel";
 import IsLocationAvailable from "../Components/IsLocationAvailable";
 import ConfirmedRide from "../Components/ConfirmedRide";
+import WaitForDriver from "../Components/LookingForADriver";
 
 const Home = () => {
   //form binding
@@ -13,9 +14,11 @@ const Home = () => {
   const [panelOpen, setPanelOpen] = useState(false);
   const [vechiclePanel, setVechiclePanel] = useState(false);
   const [confirmRidePanel, setConfirmRidePanel] = useState(false);
+  const [confrimRiderPanel, setConfirmRiderPanel] = useState(false);
   const panelRef = useRef(null);
   const vehiclePanelRef = useRef(null);
   const confirmedRidePanelRef = useRef(null);
+  const confirmeRiderPanelRef = useState(null);
   const handleSumbit = (e) => {
     e.preventDefault();
   };
@@ -65,6 +68,18 @@ const Home = () => {
       }
     },
     [confirmRidePanel]
+  );
+  useGSAP(
+    function () {
+      if (confirmeRiderPanelRef) {
+        gsap.to(confirmeRiderPanelRef.current, { transform: "translateY(0)" });
+      } else {
+        gsap.to(confirmeRiderPanelRef.current, {
+          transform: "translateY(100%)",
+        });
+      }
+    },
+    [confirmeRiderPanelRef]
   );
 
   return (
@@ -136,21 +151,34 @@ const Home = () => {
             />
           </div>
           <hr />
-          <div>{vechiclePanel && (
-            <IsLocationAvailable
-              ref={vehiclePanelRef}
-              onClose={() => setVechiclePanel(false)}
-              setConfirmRidePanel = {setConfirmRidePanel}
-            />
-          )}</div>
+          <div>
+            {vechiclePanel && (
+              <IsLocationAvailable
+                ref={vehiclePanelRef}
+                onClose={() => setVechiclePanel(false)}
+                setConfirmRidePanel={setConfirmRidePanel}
+              />
+            )}
+          </div>
         </div>
-        <div>{confirmRidePanel && (
+        <div>
+          {confirmRidePanel && (
             <ConfirmedRide
               ref={confirmedRidePanelRef}
               onClose={() => setConfirmRidePanel(false)}
+              setConfirmRiderPanel = {setConfirmRiderPanel}
             />
-          )}</div>
-        
+          )}
+        </div>
+
+        <div>
+          {confrimRiderPanel && (
+            <WaitForDriver
+              ref={confirmeRiderPanelRef}
+              onClose={() => setConfirmRiderPanel(false)}
+            />
+          )}
+        </div>
       </div>
       {/* <h1>user - uber clone</h1> */}
     </>
