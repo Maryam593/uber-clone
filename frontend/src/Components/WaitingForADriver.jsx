@@ -2,13 +2,14 @@
 import React from 'react'
 // import { useGSAP } from "@gsap/react";
 // import gsap from "gsap";
-import { FaCarSide, FaMapMarkerAlt, FaMapMarkedAlt } from "react-icons/fa";
+import {  FaMapMarkerAlt, FaMapMarkedAlt } from "react-icons/fa";
 import { RiArrowDownWideLine } from "react-icons/ri";
 import { BsFillCreditCard2FrontFill } from "react-icons/bs"
+import { IoPerson } from "react-icons/io5";
 const WaitingForADriver = () => {
   return (
     <>
-    <div className="fixed bottom-0 left-0 w-full z-50 bg-red-400 shadow-[4px_4px_4px_4px_#000] rounded-t-xl">
+    <div className="fixed  left-0 w-full z-50 bg-red-400 shadow-[4px_4px_4px_4px_#000] rounded-t-xl">
               {/* Close icon */}
               <div className="absolute top-0 w-full flex justify-center p-3">
                 <RiArrowDownWideLine
@@ -24,8 +25,8 @@ const WaitingForADriver = () => {
                   Looking for a Driver
                 </h3>
         
-                {/* Car Icon */}
-                <FaCarSide className="text-[100px] text-black transform scale-x-[-1] mb-4 
+                {/* Driver */}
+                <IoPerson className="text-[100px] text-black transform scale-x-[-1] mb-4 
                 p-2  animate-pulse" />
         
                 {/* Ride Details */}
