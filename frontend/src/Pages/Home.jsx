@@ -6,6 +6,7 @@ import LocationSearchPanel from "../Components/LocationSearchPanel";
 import IsLocationAvailable from "../Components/IsLocationAvailable";
 import ConfirmedRide from "../Components/ConfirmedRide";
 import WaitForDriver from "../Components/LookingForADriver";
+import LookingForADriver from "../Components/LookingForADriver";
 
 const Home = () => {
   //form binding
@@ -18,7 +19,8 @@ const Home = () => {
   const panelRef = useRef(null);
   const vehiclePanelRef = useRef(null);
   const confirmedRidePanelRef = useRef(null);
-  const confirmeRiderPanelRef = useState(null);
+  const confirmeRiderPanelRef = useRef(null);
+
   const handleSumbit = (e) => {
     e.preventDefault();
   };
@@ -173,12 +175,14 @@ const Home = () => {
 
         <div>
           {confrimRiderPanel && (
-            <WaitForDriver
+            <LookingForADriver
               ref={confirmeRiderPanelRef}
               onClose={() => setConfirmRiderPanel(false)}
             />
           )}
         </div>
+
+        
       </div>
       {/* <h1>user - uber clone</h1> */}
     </>
